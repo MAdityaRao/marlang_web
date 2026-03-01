@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mar — a compiled programming language with C-level speed and clean syntax. No semicolons. No boilerplate. One command to run.">
+  <meta name="author" content="Aditya Rao">
+  <meta property="og:title" content="Mar Lang — Fast. Clean. Compiled.">
+  <meta property="og:description" content="No semicolons. No boilerplate. Native speed.">
+  <meta property="og:type" content="website">
+  <title>Mar Lang — Fast. Clean. Compiled.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================================================================
+     NAV
+     ================================================================ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="Mar Logo">
+    <span class="nav-logo-text">MAR</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#showcase">Syntax</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pipeline">How It Works</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="docs.html">Docs</a></li>
+    <li><a href="https://github.com/MAdityaRao/mar-lang" class="nav-github">GitHub &rarr;</a></li>
+  </ul>
+</nav>
+
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+
+    <div class="hero-logo-wrap">
+      <img class="hero-logo" src="logo.png" alt="Mar Logo">
+    </div>
+
+    <div class="hero-badge">v0.1.0 &mdash; Open Source &middot; MIT</div>
+
+    <h1 class="hero-headline">
+      <span class="accent">Mar.</span><br>Fast. Clean.<br>Compiled.
+    </h1>
+
+    <p class="hero-sub">
+      <strong>No semicolons.</strong>
+      <span class="dot">&middot;</span>
+      <strong>No boilerplate.</strong>
+      <span class="dot">&middot;</span>
+      <strong>Native speed.</strong>
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#install" class="btn-terminal">mar run hello.mar</a>
+      <a href="docs.html" class="btn-ghost">Read the Docs &rarr;</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Semicolons</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Command to Run</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">C</div>
+        <div class="stat-label">Level Speed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Compile Stages</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     CODE SHOWCASE
+     ================================================================ -->
+<section id="showcase">
+  <div class="container">
+
+    <div class="showcase-header">
+      <div class="section-label">// Code Showcase</div>
+      <h2 class="section-title">Same Logic.<br>Half the Noise.</h2>
+      <p class="section-desc">C gets out of your way &mdash; barely. Mar does it right. Same native performance, none of the ceremony.</p>
+    </div>
+
+    <div class="code-panels">
+
+      <!-- C panel -->
+      <div class="code-panel c-panel">
+        <div class="panel-header">
+          <span class="panel-lang c-lang">C &mdash; verbose</span>
+          <div class="panel-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="code-content">
+<span class="c-pre">#include</span> <span class="c-str">&lt;stdio.h&gt;</span>
+
+<span class="c-kw">int</span> <span class="c-fn">prime</span>(<span class="c-kw">int</span> n) {
+    <span class="c-kw">if</span> (n &lt; 2) <span class="c-kw">return</span> 0;
+    <span class="c-kw">int</span> i = 2;
+    <span class="c-kw">while</span> (i * i &lt;= n) {
+        <span class="c-kw">if</span> (n % i == 0)
+            <span class="c-kw">return</span> 0;
+        i++;
+    }
+    <span class="c-kw">return</span> 1;
+}
+
+<span class="c-kw">int</span> <span class="c-fn">main</span>() {
+    <span class="c-fn">printf</span>(<span class="c-str">"Primes from 2 to 20:\n"</span>);
+    <span class="c-kw">for</span> (<span class="c-kw">int</span> i = 2; i &lt; 21; i++) {
+        <span class="c-kw">if</span> (prime(i))
+            <span class="c-fn">printf</span>(<span class="c-str">"%d "</span>, i);
+    }
+    <span class="c-fn">printf</span>(<span class="c-str">"\n"</span>);
+    <span class="c-kw">return</span> 0;
+}
+
+<span class="c-cmt">// gcc primes.c -o primes && ./primes</span>
+        </div>
+      </div>
+
+      <!-- Mar panel -->
+      <div class="code-panel mar-panel">
+        <div class="panel-header">
+          <span class="panel-lang mar-lang">Mar &mdash; clean</span>
+          <div class="panel-dots">
+            <span style="background:rgba(204,0,0,0.55)"></span>
+            <span style="background:rgba(204,0,0,0.35)"></span>
+            <span style="background:rgba(204,0,0,0.18)"></span>
+          </div>
+        </div>
+        <div class="code-content" id="mar-code-panel"><span id="type-cursor"></span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FEATURES
+     ================================================================ -->
+<section id="features">
+  <div class="container">
+
+    <div class="features-header">
+      <div>
+        <div class="section-label">// Features</div>
+        <h2 class="section-title">Built for<br>Engineers,<br>Not Scribblers.</h2>
+      </div>
+      <p class="section-desc">Every decision in Mar was made to remove friction. You write logic. Mar handles the pipeline.</p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+        <div class="feature-title">No Semicolons</div>
+        <div class="feature-desc">The parser uses statement structure and newlines to determine where expressions end. Focus on logic, not punctuation.</div>
+        <div class="feature-code">int x = 5</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <div class="feature-title">OOP with Classes</div>
+        <div class="feature-desc">Define classes with fields and methods. Instantiate with <code>new</code>. Member access via clean dot syntax &mdash; no arrow operators.</div>
+        <div class="feature-code">Player p = new Player(100)</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <polyline points="17 1 21 5 17 9"/>
+          <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+          <polyline points="7 23 3 19 7 15"/>
+          <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+        </svg>
+        <div class="feature-title">Range-Based For</div>
+        <div class="feature-desc">Python-style range loops compile down to optimized C while loops. No index variables, no off-by-one accidents.</div>
+        <div class="feature-code">for i in range(0, 10)</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <polyline points="4 17 10 11 4 5"/>
+          <line x1="12" y1="19" x2="20" y2="19"/>
+        </svg>
+        <div class="feature-title">One Command Run</div>
+        <div class="feature-desc">Mar parses your source, generates C, invokes GCC or Clang, and executes your program. One step, zero config.</div>
+        <div class="feature-code">mar run program.mar</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        <div class="feature-title">C-Level Performance</div>
+        <div class="feature-desc">Mar compiles to readable C code. You get GCC and Clang's full optimization pipelines at -O2 and beyond, for free.</div>
+        <div class="feature-code">.mar &rarr; .c &rarr; gcc &rarr; binary</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div class="feature-title">Clean Error Messages</div>
+        <div class="feature-desc">Every error shows the exact line, column, and a caret pointing to the problem. Three levels: Lexer, Parser, Semantic.</div>
+        <div class="feature-code">7 | if(primme(i)) &rarr; ^</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     PIPELINE
+     ================================================================ -->
+<section id="pipeline">
+  <div class="container">
+
+    <div class="pipeline-header">
+      <div class="section-label">// How It Works</div>
+      <h2 class="section-title">From Source<br>to Binary.</h2>
+      <p class="section-desc">Mar is a classic multi-pass compiler. Every <code>.mar</code> file moves through four deterministic stages.</p>
+    </div>
+
+    <div class="pipeline-flow">
+
+      <div class="pipe-step">
+        <div class="pipe-node">
+          <div class="pipe-icon-text">.mar</div>
+          <div class="pipe-name">Source</div>
+          <div class="pipe-file">your file</div>
+        </div>
+        <div class="pipe-desc">Clean Mar code with no semicolons and no boilerplate</div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-node">
+          <div class="pipe-icon-text">[ ]</div>
+          <div class="pipe-name">Lexer</div>
+          <div class="pipe-file">lexer.c</div>
+        </div>
+        <div class="pipe-desc">Source text becomes a flat stream of typed tokens</div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-node">
+          <div class="pipe-icon-text">/\</div>
+          <div class="pipe-name">Parser</div>
+          <div class="pipe-file">parser.c</div>
+        </div>
+        <div class="pipe-desc">Tokens become an Abstract Syntax Tree via recursive descent</div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-node">
+          <div class="pipe-icon-text">{}</div>
+          <div class="pipe-name">Codegen</div>
+          <div class="pipe-file">codegen_c.c</div>
+        </div>
+        <div class="pipe-desc">AST is walked and emitted as readable C code</div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-node">
+          <div class="pipe-icon-text">cc</div>
+          <div class="pipe-name">Compiler</div>
+          <div class="pipe-file">gcc / clang</div>
+        </div>
+        <div class="pipe-desc">System C compiler applies full optimizations</div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-node">
+          <div class="pipe-icon-text" style="color:#ffffff">OK</div>
+          <div class="pipe-name">Binary</div>
+          <div class="pipe-file" style="color:#44cc44">running</div>
+        </div>
+        <div class="pipe-desc">Native executable at full C speed</div>
+      </div>
+
+    </div>
+
+    <div class="pipeline-note">
+      <div class="pipeline-note-label">// Arena Memory Model</div>
+      <p>All AST nodes are allocated inside a single memory arena. One call frees everything at the end of compilation &mdash; no per-node <code>free()</code> required anywhere. Objects created with <code>new</code> in your Mar programs are also arena-allocated at runtime. <strong>Zero leaks by design.</strong></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     INSTALL
+     ================================================================ -->
+<section id="install">
+  <div class="container">
+
+    <div class="install-header">
+      <div class="section-label">// Install</div>
+      <h2 class="section-title">Get Running<br>in 30 Seconds.</h2>
+      <p class="section-desc">One-line install for macOS and Linux. Requires <code>gcc</code> or <code>clang</code> on your system.</p>
+    </div>
+
+    <div class="install-terminal">
+      <div class="terminal-bar">
+        <span class="terminal-title">Terminal</span>
+        <div class="panel-dots"><span></span><span></span><span></span></div>
+      </div>
+      <div class="terminal-body">
+
+        <div class="term-section">
+          <div class="term-os">// macOS &amp; Linux &mdash; one command</div>
+          <div class="term-cmd-wrap">
+            <div class="term-cmd">
+              <span class="prompt">$</span>curl -sSL https://raw.githubusercontent.com/MAdityaRao/mar-lang/main/install.sh | bash
+            </div>
+            <button class="copy-btn" data-copy="curl -sSL https://raw.githubusercontent.com/MAdityaRao/mar-lang/main/install.sh | bash">
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="term-section">
+          <div class="term-os">// Verify the install</div>
+          <div class="term-cmd-wrap">
+            <div class="term-cmd">
+              <span class="prompt">$</span>mar --help
+            </div>
+            <button class="copy-btn" data-copy="mar --help">
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="term-section">
+          <div class="term-os">// Run your first program</div>
+          <div class="term-cmd-wrap">
+            <div class="term-cmd">
+              <span class="prompt">$</span>mar run examples/hello.mar
+            </div>
+            <button class="copy-btn" data-copy="mar run examples/hello.mar">
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="term-note">
+          <strong>Requirements:</strong> gcc or clang &middot; make &middot; git<br>
+          macOS: <code>xcode-select --install</code> &nbsp;&middot;&nbsp; Linux: <code>sudo apt install gcc make git</code>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="source-block">
+      <div class="source-block-label">// Or build from source</div>
+      <div class="source-code">
+        <span class="prompt">$</span> git clone https://github.com/MAdityaRao/mar-lang.git<br>
+        <span class="prompt">$</span> cd mar-lang<br>
+        <span class="prompt">$</span> make<br>
+        <span class="prompt">$</span> sudo cp bin/mar /usr/local/bin/mar<br>
+        <span class="comment"># Now use `mar` from any directory</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     ROADMAP
+     ================================================================ -->
+<section id="roadmap">
+  <div class="container">
+
+    <div class="section-label">// Roadmap</div>
+    <h2 class="section-title">What's Built.<br>What's Next.</h2>
+
+    <div class="roadmap-grid">
+      <div class="roadmap-col">
+        <div class="roadmap-col-title done">Completed</div>
+        <div class="roadmap-item"><span class="check">+</span> int, float, char, bool types</div>
+        <div class="roadmap-item"><span class="check">+</span> Functions with parameters and return values</div>
+        <div class="roadmap-item"><span class="check">+</span> if / else with and without braces</div>
+        <div class="roadmap-item"><span class="check">+</span> while loop</div>
+        <div class="roadmap-item"><span class="check">+</span> for i in range(a, b)</div>
+        <div class="roadmap-item"><span class="check">+</span> switch / case / default without colons</div>
+        <div class="roadmap-item"><span class="check">+</span> Arrays with initializer syntax</div>
+        <div class="roadmap-item"><span class="check">+</span> Compound operators +=, -=, *=, /=</div>
+        <div class="roadmap-item"><span class="check">+</span> Classes with fields and methods</div>
+        <div class="roadmap-item"><span class="check">+</span> new keyword for object creation</div>
+        <div class="roadmap-item"><span class="check">+</span> Dot operator &mdash; obj.field, obj.method()</div>
+        <div class="roadmap-item"><span class="check">+</span> Arena-based memory &mdash; zero leaks by design</div>
+        <div class="roadmap-item"><span class="check">+</span> Pretty error messages with caret pointer</div>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-col-title upcoming">Coming Soon</div>
+        <div class="roadmap-item"><span class="circle">-</span> String type</div>
+        <div class="roadmap-item"><span class="circle">-</span> Nested functions and closures</div>
+        <div class="roadmap-item"><span class="circle">-</span> Inheritance</div>
+        <div class="roadmap-item"><span class="circle">-</span> Multiple source files and import system</div>
+        <div class="roadmap-item"><span class="circle">-</span> Standard library</div>
+        <div class="roadmap-item"><span class="circle">-</span> LLVM IR backend</div>
+        <div class="roadmap-item"><span class="circle">-</span> LSP language server for editor support</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer>
+  <div class="footer-left">
+    <a href="index.html" class="footer-logo">
+      <img src="logo.png" alt="Mar Logo">
+      <span class="footer-logo-text">MAR LANG</span>
+    </a>
+    <span class="footer-meta">MIT License &middot; Mac &amp; Linux &middot; v0.1.0</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-author">Built by <span>Aditya Rao</span></span>
+    <a href="docs.html" class="footer-link">Docs</a>
+    <a href="https://github.com/MAdityaRao/mar-lang" class="footer-link">GitHub &rarr;</a>
+    <a href="https://github.com/MAdityaRao/mar-lang/issues" class="footer-link">Issues</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mar Language documentation — syntax reference, features, examples, and compiler internals.">
+  <title>Docs &mdash; Mar Lang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================================================================
+     NAV
+     ================================================================ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="Mar Logo">
+    <span class="nav-logo-text">MAR</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#showcase">Syntax</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#pipeline">How It Works</a></li>
+    <li><a href="index.html#install">Install</a></li>
+    <li><a href="docs.html" style="color:#ffffff">Docs</a></li>
+    <li><a href="https://github.com/MAdityaRao/mar-lang" class="nav-github">GitHub &rarr;</a></li>
+  </ul>
+</nav>
+
+<!-- ================================================================
+     LAYOUT
+     ================================================================ -->
+<div class="docs-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="docs-sidebar">
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Getting Started</div>
+      <a href="#introduction"  class="sidebar-link active">Introduction</a>
+      <a href="#installation"  class="sidebar-link">Installation</a>
+      <a href="#quickstart"    class="sidebar-link">Quick Start</a>
+      <a href="#usage"         class="sidebar-link">Usage &amp; Flags</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Language Reference</div>
+      <a href="#types"         class="sidebar-link">Types</a>
+      <a href="#variables"     class="sidebar-link">Variables</a>
+      <a href="#functions"     class="sidebar-link">Functions</a>
+      <a href="#control-flow"  class="sidebar-link">Control Flow</a>
+      <a href="#loops"         class="sidebar-link">Loops</a>
+      <a href="#arrays"        class="sidebar-link">Arrays</a>
+      <a href="#io"            class="sidebar-link">Input / Output</a>
+      <a href="#classes"       class="sidebar-link">Classes &amp; Objects</a>
+      <a href="#switch"        class="sidebar-link">Switch Statement</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Compiler</div>
+      <a href="#pipeline"      class="sidebar-link">Compiler Pipeline</a>
+      <a href="#errors"        class="sidebar-link">Error Messages</a>
+      <a href="#memory"        class="sidebar-link">Memory Model</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Examples</div>
+      <a href="#ex-hello"      class="sidebar-link">Hello World</a>
+      <a href="#ex-primes"     class="sidebar-link">Prime Numbers</a>
+      <a href="#ex-fizzbuzz"   class="sidebar-link">FizzBuzz</a>
+      <a href="#ex-classes"    class="sidebar-link">RPG Player (OOP)</a>
+      <a href="#ex-arrays"     class="sidebar-link">Array Sum</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Contributing</div>
+      <a href="#project-structure" class="sidebar-link">Project Structure</a>
+      <a href="#adding-features"   class="sidebar-link">Adding Features</a>
+    </div>
+
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="docs-content">
+
+    <div class="docs-breadcrumb">
+      <a href="index.html">Mar Lang</a>
+      <span class="sep">/</span>
+      Documentation
+    </div>
+
+    <h1 class="docs-page-title"><span class="accent">Mar</span><br>Language Docs</h1>
+    <p class="docs-lead">Complete reference for the Mar programming language &mdash; syntax, types, classes, the compiler pipeline, and everything in between.</p>
+
+    <!-- ============================================================
+         INTRODUCTION
+         ============================================================ -->
+    <div class="doc-section" id="introduction">
+      <h2 class="doc-section-title">Introduction</h2>
+      <span class="doc-section-anchor">#introduction</span>
+
+      <p class="doc-text">
+        Mar is a compiled, statically-typed programming language written in C.
+        You write clean <span class="ic">.mar</span> files and run them with a single command.
+        Behind the scenes, Mar translates your code to C and invokes <span class="ic">gcc</span> or <span class="ic">clang</span> automatically.
+      </p>
+
+      <p class="doc-text">
+        <strong>The result:</strong> Fast native programs with a syntax that does not get in your way.
+      </p>
+
+      <div class="doc-callout">
+        <div class="doc-callout-label">Design Philosophy</div>
+        <p>Semicolons are noise. Verbose for loops are boilerplate. Manual gcc invocations are friction. Mar eliminates all three without sacrificing performance. The compiler translates to idiomatic C, so you inherit every optimization GCC and Clang provide &mdash; for free.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         INSTALLATION
+         ============================================================ -->
+    <div class="doc-section" id="installation">
+      <h2 class="doc-section-title">Installation</h2>
+      <span class="doc-section-anchor">#installation</span>
+
+      <p class="doc-text">Mar requires a C compiler and build tools on your system. The installer handles everything else.</p>
+
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+            <th>Install</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>gcc or clang</td>
+            <td>Compiles the generated C code</td>
+            <td>Included with Xcode / build-essential</td>
+          </tr>
+          <tr>
+            <td>make</td>
+            <td>Builds the Mar compiler from source</td>
+            <td>Included with Xcode / build-essential</td>
+          </tr>
+          <tr>
+            <td>git</td>
+            <td>Clones the repository</td>
+            <td>brew install git / apt install git</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="doc-code-label">macOS &amp; Linux &mdash; one-liner</div>
+      <div class="doc-code">curl -sSL https://raw.githubusercontent.com/MAdityaRao/mar-lang/main/install.sh | bash</div>
+
+      <div class="doc-code-label">macOS &mdash; prerequisites (Xcode tools)</div>
+      <div class="doc-code">xcode-select --install</div>
+
+      <div class="doc-code-label">Linux (Ubuntu / Debian) &mdash; prerequisites</div>
+      <div class="doc-code">sudo apt update &amp;&amp; sudo apt install gcc make git</div>
+
+      <div class="doc-code-label">Build from source</div>
+      <div class="doc-code">git clone https://github.com/MAdityaRao/mar-lang.git
+cd mar-lang
+make
+sudo cp bin/mar /usr/local/bin/mar</div>
+
+      <div class="doc-code-label">Verify installation</div>
+      <div class="doc-code">mar --help</div>
+    </div>
+
+    <!-- ============================================================
+         QUICK START
+         ============================================================ -->
+    <div class="doc-section" id="quickstart">
+      <h2 class="doc-section-title">Quick Start</h2>
+      <span class="doc-section-anchor">#quickstart</span>
+
+      <p class="doc-text">Create a file called <span class="ic">hello.mar</span> with the following content:</p>
+
+      <div class="doc-code-label">hello.mar</div>
+      <div class="doc-code"><span class="m-type">int</span> <span class="m-fn">main</span>()
+{
+    <span class="m-fn">print</span>(<span class="m-str">"Hello, World!\n"</span>)
+    <span class="m-kw">return</span> <span class="m-num">0</span>
+}</div>
+
+      <p class="doc-text">Run it:</p>
+      <div class="doc-code">mar run hello.mar</div>
+      <div class="doc-code-label">output</div>
+      <div class="doc-code">Hello, World!</div>
+
+      <p class="doc-text">That is the entire workflow. No separate compile step, no intermediate files to manage, no manually invoking gcc.</p>
+    </div>
+
+    <!-- ============================================================
+         USAGE
+         ============================================================ -->
+    <div class="doc-section" id="usage">
+      <h2 class="doc-section-title">Usage &amp; Flags</h2>
+      <span class="doc-section-anchor">#usage</span>
+
+      <div class="doc-code-label">Synopsis</div>
+      <div class="doc-code">mar run &lt;file.mar&gt;
+mar &lt;file.mar&gt; [options]</div>
+
+      <table class="doc-table">
+        <thead>
+          <tr><th>Command / Flag</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>mar run file.mar</td><td>Compile and execute in one step</td></tr>
+          <tr><td>mar file.mar -o out.c</td><td>Emit generated C to a file for inspection</td></tr>
+          <tr><td>mar --help</td><td>Print usage information</td></tr>
+          <tr><td>mar --version</td><td>Print compiler version</td></tr>
+        </tbody>
+      </table>
+
+      <div class="doc-callout">
+        <div class="doc-callout-label">What happens under the hood</div>
+        <p>
+          <strong>mar run yourprogram.mar</strong> does four things in sequence:
+          parses the source into an AST, generates C code internally,
+          invokes gcc or clang to compile it, then runs the resulting binary.
+          The intermediate C file is temporary and cleaned up automatically.
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         TYPES
+         ============================================================ -->
+    <div class="doc-section" id="types">
+      <h2 class="doc-section-title">Types</h2>
+      <span class="doc-section-anchor">#types</span>
+
+      <p class="doc-text">Mar is statically typed. All variables must be declared with a type.</p>
+
+      <table class="doc-table">
+        <thead>
+          <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>int</td><td>Signed integer (maps to C int)</td><td>int x = 42</td></tr>
+          <tr><td>float</td><td>Floating-point number</td><td>float pi = 3.14</td></tr>
+          <tr><td>char</td><td>Single character</td><td>char c = 'A'</td></tr>
+          <tr><td>bool</td><td>Boolean &mdash; true or false</td><td>bool flag = true</td></tr>
+          <tr><td>ClassName</td><td>User-defined class type</td><td>Player p = new Player(100)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================================================
+         VARIABLES
+         ============================================================ -->
+    <div class="doc-section" id="variables">
+      <h2 class="doc-section-title">Variables</h2>
+      <span class="doc-section-anchor">#variables</span>
+
+      <div class="doc-code-label">Declaration and assignment</div>
+      <div class="doc-code"><span class="m-type">int</span> x = <span class="m-num">5</span>
+<span class="m-type">float</span> ratio = <span class="m-num">3.14</span>
+<span class="m-type">char</span> letter = <span class="m-str">'A'</span>
+<span class="m-type">bool</span> active = <span class="m-kw">true</span></div>
+
+      <div class="doc-code-label">Reassignment</div>
+      <div class="doc-code">x = <span class="m-num">10</span>
+x += <span class="m-num">3</span>
+x -= <span class="m-num">1</span>
+x *= <span class="m-num">2</span>
+x /= <span class="m-num">4</span></div>
+
+      <p class="doc-text">
+        Variables must be declared before use.
+        There is no implicit type casting &mdash; assign compatible types only.
+      </p>
+    </div>
+
+    <!-- ============================================================
+         FUNCTIONS
+         ============================================================ -->
+    <div class="doc-section" id="functions">
+      <h2 class="doc-section-title">Functions</h2>
+      <span class="doc-section-anchor">#functions</span>
+
+      <p class="doc-text">Functions are declared with a return type, name, parameter list, and a block body. The <span class="ic">main</span> function is the entry point.</p>
+
+      <div class="doc-code-label">Function declaration</div>
+      <div class="doc-code"><span class="m-type">int</span> <span class="m-fn">add</span>(<span class="m-type">int</span> a, <span class="m-type">int</span> b)
+{
+    <span class="m-kw">return</span> a + b
+}
+
+<span class="m-type">int</span> <span class="m-fn">main</span>()
+{
+    <span class="m-type">int</span> result = <span class="m-fn">add</span>(<span class="m-num">3</span>, <span class="m-num">4</span>)
+    <span class="m-fn">print</span>(<span class="m-str">"%d\n"</span>, result)
+    <span class="m-kw">return</span> <span class="m-num">0</span>
+}</div>
+
+      <div class="doc-code-label">Void function (no return value)</div>
+      <div class="doc-code"><span class="m-kw">void</span> <span class="m-fn">greet</span>(<span class="m-type">int</span> n)
+{
+    <span class="m-fn">print</span>(<span class="m-str">"Hello %d times\n"</span>, n)
+}</div>
+
+      <p class="doc-text">
+        Functions must be declared before they are called.
+        Recursive functions are fully supported.
+      </p>
+    </div>
+
+    <!-- ============================================================
+         CONTROL FLOW
+         ============================================================ -->
+    <div class="doc-section" id="control-flow">
+      <h2 class="doc-section-title">Control Flow</h2>
+      <span class="doc-section-anchor">#control-flow</span>
+
+      <div class="doc-code-label">if / else if / else</div>
+      <div class="doc-code"><span class="m-kw">if</span>(x &gt; <span class="m-num">0</span>)
+{
+    <span class="m-fn">print</span>(<span class="m-str">"positive\n"</span>)
+}
+<span class="m-kw">else if</span>(x &lt; <span class="m-num">0</span>)
+{
+    <span class="m-fn">print</span>(<span class="m-str">"negative\n"</span>)
+}
+<span class="m-kw">else</span>
+{
+    <span class="m-fn">print</span>(<span class="m-str">"zero\n"</span>)
+}</div>
+
+      <p class="doc-text">Braces are optional for single-statement bodies:</p>
+
+      <div class="doc-code"><span class="m-kw">if</span>(x &gt; <span class="m-num">0</span>)
+    <span class="m-fn">print</span>(<span class="m-str">"positive\n"</span>)</div>
+    </div>
+
+    <!-- ============================================================
+         LOOPS
+         ============================================================ -->
+    <div class="doc-section" id="loops">
+      <h2 class="doc-section-title">Loops</h2>
+      <span class="doc-section-anchor">#loops</span>
+
+      <div class="doc-code-label">while loop</div>
+      <div class="doc-code"><span class="m-type">int</span> i = <span class="m-num">0</span>
+<span class="m-kw">while</span>(i &lt; <span class="m-num">10</span>)
+{
+    <span class="m-fn">print</span>(<span class="m-str">"%d\n"</span>, i)
+    i = i + <span class="m-num">1</span>
+}</div>
+
+      <div class="doc-code-label">for-range loop</div>
+      <div class="doc-code"><span class="m-kw">for</span> i <span class="m-kw">in</span> <span class="m-fn">range</span>(<span class="m-num">0</span>, <span class="m-num">10</span>)
+{
+    <span class="m-fn">print</span>(<span class="m-str">"%d\n"</span>, i)
+}</div>
+
+      <p class="doc-text">
+        <span class="ic">range(a, b)</span> iterates from <span class="ic">a</span> inclusive to <span class="ic">b</span> exclusive.
+        The loop variable <span class="ic">i</span> is automatically declared as <span class="ic">int</span>.
+        Under the hood it compiles to a C while loop for maximum performance.
+      </p>
+
+      <div class="doc-code-label">break inside a loop</div>
+      <div class="doc-code"><span class="m-kw">while</span>(<span class="m-num">1</span>)
+{
+    <span class="m-type">int</span> x = <span class="m-num">0</span>
+    <span class="m-fn">take</span>(<span class="m-str">"%d"</span>, &amp;x)
+    <span class="m-kw">if</span>(x == <span class="m-num">0</span>)
+        <span class="m-kw">break</span>
+    <span class="m-fn">print</span>(<span class="m-str">"got %d\n"</span>, x)
+}</div>
+    </div>
+
+    <!-- ============================================================
+         ARRAYS
+         ============================================================ -->
+    <div class="doc-section" id="arrays">
+      <h2 class="doc-section-title">Arrays</h2>
+      <span class="doc-section-anchor">#arrays</span>
+
+      <div class="doc-code-label">Declaration with initializer</div>
+      <div class="doc-code"><span class="m-type">int</span> arr[<span class="m-num">5</span>] = {<span class="m-num">1</span>, <span class="m-num">2</span>, <span class="m-num">3</span>, <span class="m-num">4</span>, <span class="m-num">5</span>}</div>
+
+      <div class="doc-code-label">Element access and mutation</div>
+      <div class="doc-code">arr[<span class="m-num">0</span>] = <span class="m-num">10</span>
+<span class="m-fn">print</span>(<span class="m-str">"%d\n"</span>, arr[<span class="m-num">2</span>])</div>
+
+      <div class="doc-code-label">Iterating an array with range</div>
+      <div class="doc-code"><span class="m-kw">for</span> i <span class="m-kw">in</span> <span class="m-fn">range</span>(<span class="m-num">0</span>, <span class="m-num">5</span>)
+{
+    <span class="m-fn">print</span>(<span class="m-str">"%d\n"</span>, arr[i])
+}</div>
+
+      <p class="doc-text">Array size must be a compile-time integer literal. Dynamic arrays are on the roadmap.</p>
+    </div>
+
+    <!-- ============================================================
+         I/O
+         ============================================================ -->
+    <div class="doc-section" id="io">
+      <h2 class="doc-section-title">Input / Output</h2>
+      <span class="doc-section-anchor">#io</span>
+
+      <p class="doc-text">Mar provides <span class="ic">print()</span> and <span class="ic">take()</span> as thin wrappers over C's <span class="ic">printf</span> and <span class="ic">scanf</span>.</p>
+
+      <div class="doc-code-label">print &mdash; formatted output</div>
+      <div class="doc-code"><span class="m-fn">print</span>(<span class="m-str">"Hello, World!\n"</span>)
+<span class="m-fn">print</span>(<span class="m-str">"x = %d, y = %d\n"</span>, x, y)
+<span class="m-fn">print</span>(<span class="m-str">"pi = %.2f\n"</span>, pi)</div>
+
+      <div class="doc-code-label">take &mdash; formatted input</div>
+      <div class="doc-code"><span class="m-type">int</span> n
+<span class="m-fn">print</span>(<span class="m-str">"Enter a number: "</span>)
+<span class="m-fn">take</span>(<span class="m-str">"%d"</span>, &amp;n)
+<span class="m-fn">print</span>(<span class="m-str">"You entered: %d\n"</span>, n)</div>
+
+      <table class="doc-table">
+        <thead><tr><th>Format Specifier</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td>%d</td><td>int</td></tr>
+          <tr><td>%f</td><td>float</td></tr>
+          <tr><td>%c</td><td>char</td></tr>
+          <tr><td>%s</td><td>string (char*)</td></tr>
+          <tr><td>\n</td><td>newline</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================================================
+         CLASSES
+         ============================================================ -->
+    <div class="doc-section" id="classes">
+      <h2 class="doc-section-title">Classes &amp; Objects</h2>
+      <span class="doc-section-anchor">#classes</span>
+
+      <p class="doc-text">
+        Mar supports object-oriented programming via the <span class="ic">class</span> keyword.
+        Classes compile to C structs with associated functions.
+        All objects are heap-allocated via the arena allocator.
+      </p>
+
+      <div class="doc-code-label">Class definition</div>
+      <div class="doc-code"><span class="m-kw">class</span> <span class="m-type">Player</span> {
+    <span class="m-type">int</span> health
+    <span class="m-type">int</span> score
+    <span class="m-type">int</span> kills
+
+    <span class="m-kw">void</span> <span class="m-fn">init</span>(<span class="m-type">int</span> h) {
+        health = h
+        score  = <span class="m-num">0</span>
+        kills  = <span class="m-num">0</span>
+    }
+
+    <span class="m-kw">void</span> <span class="m-fn">fight</span>(<span class="m-type">int</span> enemy_level) {
+        health = health - enemy_level
+        score  = score + enemy_level
+        kills  = kills + <span class="m-num">1</span>
+    }
+}</div>
+
+      <div class="doc-code-label">Object creation and use</div>
+      <div class="doc-code"><span class="m-type">Player</span> hero = <span class="m-kw">new</span> <span class="m-fn">Player</span>(<span class="m-num">100</span>)
+
+hero.<span class="m-fn">fight</span>(<span class="m-num">5</span>)
+<span class="m-fn">print</span>(<span class="m-str">"HP: %d\n"</span>, hero.health)</div>
+
+      <div class="doc-callout">
+        <div class="doc-callout-label">How it compiles</div>
+        <p>
+          <strong>class</strong> becomes a C typedef struct plus associated functions.
+          <strong>new Player(100)</strong> becomes arena_alloc + Player_init(100).
+          <strong>hero.field</strong> compiles to <strong>hero-&gt;field</strong> in C because all class
+          instances are pointer types. The dot operator in Mar always means pointer dereference &mdash;
+          you never have to think about <code>-&gt;</code>.
+        </p>
+      </div>
+
+      <p class="doc-text">
+        The <span class="ic">init</span> method is required and is called automatically by <span class="ic">new</span>.
+        Class names can be used as types in function parameters.
+      </p>
+    </div>
+
+    <!-- ============================================================
+         SWITCH
+         ============================================================ -->
+    <div class="doc-section" id="switch">
+      <h2 class="doc-section-title">Switch Statement</h2>
+      <span class="doc-section-anchor">#switch</span>
+
+      <p class="doc-text">
+        Mar&rsquo;s switch statement has no colons after case labels and automatically
+        inserts <span class="ic">break</span> after each case unless you already wrote one.
+        This eliminates C's notorious accidental fallthrough.
+      </p>
+
+      <div class="doc-code-label">switch / case / default</div>
+      <div class="doc-code"><span class="m-kw">switch</span>(n)
+{
+    <span class="m-kw">case</span> <span class="m-num">1</span>
+        <span class="m-fn">print</span>(<span class="m-str">"one\n"</span>)
+        <span class="m-kw">break</span>
+    <span class="m-kw">case</span> <span class="m-num">2</span>
+        <span class="m-fn">print</span>(<span class="m-str">"two\n"</span>)
+        <span class="m-kw">break</span>
+    <span class="m-kw">default</span>
+        <span class="m-fn">print</span>(<span class="m-str">"other\n"</span>)
+}</div>
+    </div>
+
+    <!-- ============================================================
+         PIPELINE
+         ============================================================ -->
+    <div class="doc-section" id="pipeline">
+      <h2 class="doc-section-title">Compiler Pipeline</h2>
+      <span class="doc-section-anchor">#pipeline</span>
+
+      <p class="doc-text">The Mar compiler is a classic multi-pass pipeline. Every <span class="ic">.mar</span> file passes through these stages in order:</p>
+
+      <table class="doc-table">
+        <thead>
+          <tr><th>Stage</th><th>Source File</th><th>Input</th><th>Output</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lexer</td>
+            <td>src/lexer.c</td>
+            <td>Source text</td>
+            <td>Token stream</td>
+          </tr>
+          <tr>
+            <td>Parser</td>
+            <td>src/parser.c</td>
+            <td>Token stream</td>
+            <td>AST (Abstract Syntax Tree)</td>
+          </tr>
+          <tr>
+            <td>Code Generator</td>
+            <td>src/codegen_c.c</td>
+            <td>AST</td>
+            <td>C source file</td>
+          </tr>
+          <tr>
+            <td>C Compiler</td>
+            <td>gcc / clang</td>
+            <td>C source file</td>
+            <td>Native binary</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="doc-code-label">Key translations in codegen</div>
+      <div class="doc-code">for i in range(a, b)  &rarr;  while loop in C
+print(...)           &rarr;  printf(...)
+take(...)            &rarr;  scanf(...)
+switch without colon &rarr;  valid C switch + auto break
+class Foo {}         &rarr;  typedef struct + Foo_method()
+new Foo()            &rarr;  arena_alloc + Foo_init()
+obj.field            &rarr;  obj-&gt;field</div>
+    </div>
+
+    <!-- ============================================================
+         ERRORS
+         ============================================================ -->
+    <div class="doc-section" id="errors">
+      <h2 class="doc-section-title">Error Messages</h2>
+      <span class="doc-section-anchor">#errors</span>
+
+      <p class="doc-text">Mar collects errors from all stages and prints them with the source line and a caret pointing to the exact column.</p>
+
+      <table class="doc-table">
+        <thead>
+          <tr><th>Error Type</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LexerError</td><td>Invalid character in source file</td></tr>
+          <tr><td>ParserError</td><td>Malformed code structure &mdash; missing brace, unexpected token</td></tr>
+          <tr><td>SemanticError</td><td>Logic error &mdash; undefined variable, break outside loop</td></tr>
+          <tr><td>CodegenError</td><td>Internal compiler error during C output generation</td></tr>
+        </tbody>
+      </table>
+
+      <div class="doc-code-label">Example &mdash; undefined variable</div>
+      <div class="error-block"><span class="error-type">SemanticError</span> <span class="error-loc">at primes.mar:7:8</span>
+  <span class="error-msg">Undefined variable 'primme'</span>
+
+     <span class="error-src">7 |     if(primme(i))</span>
+     <span class="error-src">  |        </span><span class="error-caret">^</span></div>
+
+      <div class="doc-code-label">Example &mdash; unexpected token</div>
+      <div class="error-block"><span class="error-type">ParserError</span> <span class="error-loc">at hello.mar:3:5</span>
+  <span class="error-msg">Expected '}' but got 'return'</span>
+
+     <span class="error-src">3 |     return 0</span>
+     <span class="error-src">  |     </span><span class="error-caret">^</span></div>
+    </div>
+
+    <!-- ============================================================
+         MEMORY
+         ============================================================ -->
+    <div class="doc-section" id="memory">
+      <h2 class="doc-section-title">Memory Model</h2>
+      <span class="doc-section-anchor">#memory</span>
+
+      <p class="doc-text">
+        Mar uses an arena allocator for all compiler internals and for objects created with <span class="ic">new</span> at runtime.
+      </p>
+
+      <div class="doc-callout">
+        <div class="doc-callout-label">How the arena works</div>
+        <p>
+          All memory &mdash; AST nodes during compilation, class instances at runtime &mdash; is allocated from a single contiguous region.
+          When the program exits, one call frees the entire arena.
+          There are no per-allocation <strong>free()</strong> calls anywhere.
+          This makes the compiler fast and eliminates use-after-free and double-free bugs by design.
+        </p>
+      </div>
+
+      <p class="doc-text">
+        Objects created with <span class="ic">new</span> live for the lifetime of the program.
+        This is intentional: Mar programs are typically short-lived native tools where arena allocation is the optimal strategy.
+        A garbage collector or reference counting system is not planned.
+      </p>
+    </div>
+
+    <!-- ============================================================
+         EXAMPLES
+         ============================================================ -->
+    <div class="doc-section" id="ex-hello">
+      <h2 class="doc-section-title">Example &mdash; Hello World</h2>
+      <span class="doc-section-anchor">#ex-hello</span>
+
+      <div class="doc-code"><span class="m-type">int</span> <span class="m-fn">main</span>()
+{
+    <span class="m-fn">print</span>(<span class="m-str">"Hello, World!\n"</span>)
+    <span class="m-kw">return</span> <span class="m-num">0</span>
+}</div>
+    </div>
+
+    <div class="doc-section" id="ex-primes">
+      <h2 class="doc-section-title">Example &mdash; Prime Numbers</h2>
+      <span class="doc-section-anchor">#ex-primes</span>
+
+      <div class="doc-code"><span class="m-type">int</span> <span class="m-fn">prime</span>(<span class="m-type">int</span> n)
+{
+    <span class="m-kw">if</span>(n &lt; <span class="m-num">2</span>)
+        <span class="m-kw">return</span> <span class="m-num">0</span>
+    <span class="m-type">int</span> i = <span class="m-num">2</span>
+    <span class="m-kw">while</span>(i * i &lt;= n)
+    {
+        <span class="m-kw">if</span>(n % i == <span class="m-num">0</span>)
+            <span class="m-kw">return</span> <span class="m-num">0</span>
+        i = i + <span class="m-num">1</span>
+    }
+    <span class="m-kw">return</span> <span class="m-num">1</span>
+}
+
+<span class="m-type">int</span> <span class="m-fn">main</span>()
+{
+    <span class="m-fn">print</span>(<span class="m-str">"Primes from 2 to 20:\n"</span>)
+    <span class="m-kw">for</span> i <span class="m-kw">in</span> <span class="m-fn">range</span>(<span class="m-num">2</span>, <span class="m-num">21</span>)
+    {
+        <span class="m-kw">if</span>(<span class="m-fn">prime</span>(i))
+            <span class="m-fn">print</span>(<span class="m-str">"%d "</span>, i)
+    }
+    <span class="m-fn">print</span>(<span class="m-str">"\n"</span>)
+    <span class="m-kw">return</span> <span class="m-num">0</span>
+}</div>
+
+      <div class="doc-code-label">output</div>
+      <div class="doc-code">Primes from 2 to 20:
+2 3 5 7 11 13 17 19</div>
+    </div>
+
+    <div class="doc-section" id="ex-fizzbuzz">
+      <h2 class="doc-section-title">Example &mdash; FizzBuzz</h2>
+      <span class="doc-section-anchor">#ex-fizzbuzz</span>
+
+      <div class="doc-code"><span class="m-type">int</span> <span class="m-fn">main</span>()
+{
+    <span class="m-kw">for</span> i <span class="m-kw">in</span> <span class="m-fn">range</span>(<span class="m-num">1</span>, <span class="m-num">101</span>)
+    {
+        <span class="m-kw">if</span>(i % <span class="m-num">15</span> == <span class="m-num">0</span>)
+            <span class="m-fn">print</span>(<span class="m-str">"FizzBuzz\n"</span>)
+        <span class="m-kw">else if</span>(i % <span class="m-num">3</span> == <span class="m-num">0</span>)
+            <span class="m-fn">print</span>(<span class="m-str">"Fizz\n"</span>)
+        <span class="m-kw">else if</span>(i % <span class="m-num">5</span> == <span class="m-num">0</span>)
+            <span class="m-fn">print</span>(<span class="m-str">"Buzz\n"</span>)
+        <span class="m-kw">else</span>
+            <span class="m-fn">print</span>(<span class="m-str">"%d\n"</span>, i)
+    }
+    <span class="m-kw">return</span> <span class="m-num">0</span>
+}</div>
+    </div>
+
+    <div class="doc-section" id="ex-classes">
+      <h2 class="doc-section-title">Example &mdash; RPG Player (OOP)</h2>
+      <span class="doc-section-anchor">#ex-classes</span>
+
+      <div class="doc-code"><span class="m-kw">class</span> <span class="m-type">Player</span> {
+    <span class="m-type">int</span> health
+    <span class="m-type">int</span> score
+    <span class="m-type">int</span> kills
+
+    <span class="m-kw">void</span> <span class="m-fn">init</span>(<span class="m-type">int</span> h) {
+        health = h
+        score  = <span class="m-num">0</span>
+        kills  = <span class="m-num">0</span>
+    }
+
+    <span class="m-kw">void</span> <span class="m-fn">fight</span>(<span class="m-type">int</span> enemy_level) {
+        health = health - enemy_level
+        score  = score + enemy_level
+        kills  = kills + <span class="m-num">1</span>
+    }
+}
+
+<span class="m-type">int</span> <span class="m-fn">main</span>()
+{
+    <span class="m-type">Player</span> hero = <span class="m-kw">new</span> <span class="m-fn">Player</span>(<span class="m-num">100</span>)
+
+    <span class="m-kw">for</span> i <span class="m-kw">in</span> <span class="m-fn">range</span>(<span class="m-num">1</span>, <span class="m-num">6</span>)
+    {
+        hero.<span class="m-fn">fight</span>(i)
+        <span class="m-fn">print</span>(<span class="m-str">"Fight %d: HP=%d Score=%d\n"</span>, i, hero.health, hero.score)
+    }
+
+    <span class="m-fn">print</span>(<span class="m-str">"Total kills: %d\n"</span>, hero.kills)
+    <span class="m-kw">return</span> <span class="m-num">0</span>
+}</div>
+
+      <div class="doc-code-label">output</div>
+      <div class="doc-code">Fight 1: HP=99 Score=1
+Fight 2: HP=97 Score=3
+Fight 3: HP=94 Score=6
+Fight 4: HP=90 Score=10
+Fight 5: HP=85 Score=15
+Total kills: 5</div>
+    </div>
+
+    <div class="doc-section" id="ex-arrays">
+      <h2 class="doc-section-title">Example &mdash; Array Sum</h2>
+      <span class="doc-section-anchor">#ex-arrays</span>
+
+      <div class="doc-code"><span class="m-type">int</span> <span class="m-fn">main</span>()
+{
+    <span class="m-type">int</span> arr[<span class="m-num">5</span>] = {<span class="m-num">10</span>, <span class="m-num">20</span>, <span class="m-num">30</span>, <span class="m-num">40</span>, <span class="m-num">50</span>}
+    <span class="m-type">int</span> sum = <span class="m-num">0</span>
+    <span class="m-kw">for</span> i <span class="m-kw">in</span> <span class="m-fn">range</span>(<span class="m-num">0</span>, <span class="m-num">5</span>)
+    {
+        sum = sum + arr[i]
+    }
+    <span class="m-fn">print</span>(<span class="m-str">"Sum = %d\n"</span>, sum)
+    <span class="m-kw">return</span> <span class="m-num">0</span>
+}</div>
+
+      <div class="doc-code-label">output</div>
+      <div class="doc-code">Sum = 150</div>
+    </div>
+
+    <!-- ============================================================
+         PROJECT STRUCTURE
+         ============================================================ -->
+    <div class="doc-section" id="project-structure">
+      <h2 class="doc-section-title">Project Structure</h2>
+      <span class="doc-section-anchor">#project-structure</span>
+
+      <div class="doc-code">mar-lang/
+ src/
+   main.c         entry point &mdash; reads args, runs pipeline
+   arena.c        memory allocator (region-based)
+   error.c        error collection and pretty printing
+   ast.c          AST node constructors
+   lexer.c        tokenizer
+   parser.c       recursive descent parser
+   codegen_c.c    C code generator
+ include/mar/
+   arena.h
+   error.h
+   ast.h
+   lexer.h
+   parser.h
+   codegen_c.h
+ examples/        sample .mar programs
+ tests/           integration test suite
+ docs/            language documentation
+ bin/             compiled binary (after make)
+ build/           object files (after make)
+ Makefile</div>
+    </div>
+
+    <!-- ============================================================
+         ADDING FEATURES
+         ============================================================ -->
+    <div class="doc-section" id="adding-features">
+      <h2 class="doc-section-title">Adding Features</h2>
+      <span class="doc-section-anchor">#adding-features</span>
+
+      <p class="doc-text">The compiler has a clean separation of concerns. Here is where each kind of change belongs:</p>
+
+      <table class="doc-table">
+        <thead>
+          <tr><th>What to change</th><th>Where</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Add a new keyword</td><td>src/lexer.c &rarr; KEYWORDS[] array</td></tr>
+          <tr><td>Add a new single-char token</td><td>src/lexer.c &rarr; single-char switch at bottom of lexer_tokenize</td></tr>
+          <tr><td>Add new syntax</td><td>src/parser.c &rarr; case in parse_stmt()</td></tr>
+          <tr><td>Add a new AST node</td><td>include/mar/ast.h &rarr; StmtKind or ExprKind enum + union</td></tr>
+          <tr><td>Change how something compiles to C</td><td>src/codegen_c.c &rarr; case in emit_stmt() or emit_expr()</td></tr>
+          <tr><td>Add a new type</td><td>include/mar/ast.h &rarr; TypeKind enum</td></tr>
+          <tr><td>Change error messages</td><td>src/error.c</td></tr>
+        </tbody>
+      </table>
+
+      <div class="doc-callout">
+        <div class="doc-callout-label">Recommended reading order</div>
+        <p>
+          Start with <strong>include/mar/ast.h</strong> to understand all data structures.
+          Then read <strong>src/lexer.c</strong>, <strong>src/parser.c</strong>, <strong>src/codegen_c.c</strong>, and finally <strong>src/main.c</strong>
+          to see how it all connects.
+        </p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer>
+  <div class="footer-left">
+    <a href="index.html" class="footer-logo">
+      <img src="logo.png" alt="Mar Logo">
+      <span class="footer-logo-text">MAR LANG</span>
+    </a>
+    <span class="footer-meta">MIT License &middot; Mac &amp; Linux &middot; v0.1.0</span>
+  </div>
+  <div class="footer-right">
+    <span class="footer-author">Built by <span>Aditya Rao</span></span>
+    <a href="index.html" class="footer-link">Home</a>
+    <a href="https://github.com/MAdityaRao/mar-lang" class="footer-link">GitHub &rarr;</a>
+    <a href="https://github.com/MAdityaRao/mar-lang/issues" class="footer-link">Issues</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
