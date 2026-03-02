@@ -17,20 +17,19 @@ const MAR_CODE_HTML = `<span class="m-cmt">// Prime checker in Mar</span>
     {
         <span class="m-kw">if</span>(n % i == <span class="m-num">0</span>)
             <span class="m-kw">return</span> <span class="m-num">0</span>
-        i = i + <span class="m-num">1</span>
+        i += <span class="m-num">1</span>
     }
     <span class="m-kw">return</span> <span class="m-num">1</span>
 }
 
 <span class="m-type">int</span> <span class="m-fn">main</span>()
 {
-    <span class="m-fn">print</span>(<span class="m-str">"Primes from 2 to 20:\\n"</span>)
+    <span class="m-fn">print</span>(<span class="m-str">"Primes up to 20:"</span>)
     <span class="m-kw">for</span> i <span class="m-kw">in</span> <span class="m-fn">range</span>(<span class="m-num">2</span>, <span class="m-num">21</span>)
     {
         <span class="m-kw">if</span>(<span class="m-fn">prime</span>(i))
-            <span class="m-fn">print</span>(<span class="m-str">"%d "</span>, i)
+            <span class="m-fn">print</span>(i)
     }
-    <span class="m-fn">print</span>(<span class="m-str">"\\n"</span>)
     <span class="m-kw">return</span> <span class="m-num">0</span>
 }`;
 
